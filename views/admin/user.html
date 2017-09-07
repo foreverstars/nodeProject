@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link type="text/css" rel="stylesheet" href="/public/css/bootstrap.css"/>
+    <script src="https://cdn.bootcss.com/jquery/1.12.4/jquery.min.js"></script>
+    <script src="/public/js/bootstrap.js"></script>
+    <script src="/public/js/adminUser.js"></script>
+</head>
+<body>
+
+<nav class="navbar navbar-default">
+    <div class="navbar-header">
+        <a class="navbar-brand" href="/admin">后台系统首页</a>
+    </div>
+
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+
+        <ul class="nav navbar-nav">
+            <li class="active"><a href="#">用户列表 <span class="sr-only">(current)</span></a></li>
+
+
+        </ul>
+
+
+        <ul class="nav navbar-nav navbar-right">
+            {% if (username&&isAdmin) %}
+            <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{username}} <span class="caret"></span></a>
+                <ul class="dropdown-menu">
+                    <li><a href="#" id="exit">退出</a></li>
+                </ul>
+            </li>
+
+
+            {% else %}
+            <li><a href="/admin/login">登录</a></li>
+            {% endif %}
+
+
+
+        </ul>
+    </div>
+</nav>
+
+用户列表
+{% if isAdmin %}
+
+
+<!--{{listData}}-->
+
+<table class="table table-striped table-hover">
+    <tr>
+        <th>id</th>
+        <th>用户名</th>
+        <th>密码</th>
+        <th>是否是管理员</th>
+        <th>操作</th>
+    </tr>
+    {% for user in listData %}
+    <tr>
+        <td>{{user._id.toString()}}</td>
+        <td>{{user.username}}</td>
+        <td>{{user.password}}</td>
+        <td>
+            {% if user.isAdmin %}
+            是
+            {% else %}
+            否
+            {% endif %}
+        </td>
+        <td>
+            {% if !user.isAdmin %}
+            <a class="btn btn-danger" id="{{user._id.toString()}}">删除</a>
+            <a class="btn btn-success" href="/admin/modify?userId={{user._id.toString()}}">修改</a>
+            {% endif %}
+        </td>
+    </tr>
+    {% endfor %}
+</table>
+
+<div>
+    {% if page>1 %}
+    <a class="btn btn-primary" href="/admin/user?page={{page-1}}">上一页</a>
+    {% else %}
+    <a class="btn btn-primary" disabled="disabled">上一页</a>
+    {% endif %}
+
+    {{page}}/{{pages}}
+
+    {% if page<pages %}
+    <a class="btn btn-primary" href="/admin/user?page={{page+1}}">下一页</a>
+    {% else %}
+    <a class="btn btn-primary" disabled="disabled">下一页</a>
+    {% endif %}
+</div>
+
+
+{% else %}
+
+请登录
+
+{% endif %}
+
+
+<div class="modal fade" tabindex="-1" role="dialog" id="myModal">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">提示</h4>
+            </div>
+            <div class="modal-body">
+                <p>确认删除吗？</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                <button type="button" class="btn btn-primary">确定</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div>
+
+
+
+
+
+
+
+</body>
+</html>

@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link type="text/css" rel="stylesheet" href="/public/css/bootstrap.css"/>
+    <script src="https://cdn.bootcss.com/jquery/1.12.4/jquery.min.js"></script>
+    <script src="/public/js/bootstrap.js"></script>
+    <script src="/public/js/adminIndex.js"></script>
+</head>
+<body>
+
+<nav class="navbar navbar-default">
+    <div class="navbar-header">
+        <a class="navbar-brand" href="#">后台系统首页</a>
+    </div>
+
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+
+        <ul class="nav navbar-nav">
+            <!--<li class="active"><a href="#">Link <span class="sr-only">(current)</span></a></li>-->
+            <li><a href="/admin/user">用户列表</a></li>
+
+        </ul>
+
+
+        <ul class="nav navbar-nav navbar-right">
+            {% if (username&&isAdmin) %}
+            <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{username}} <span class="caret"></span></a>
+                <ul class="dropdown-menu">
+                    <li><a href="#" id="exit">退出</a></li>
+                </ul>
+            </li>
+
+
+            {% else %}
+            <li><a href="/admin/login">登录</a></li>
+            {% endif %}
+
+        </ul>
+    </div>
+</nav>
+
+    首页
+    {% if isAdmin %}
+    <div>你好，管理员</div>
+
+    {% elseif username %}
+    <div>你没有权限</div>
+
+    {% else %}
+    <div>请先登录</div>
+    {% endif %}
+
+</body>
+</html>
